@@ -32,8 +32,8 @@ def login():
 
     return render_template('login.html')
 
-@auth.route('/logout')
-@login_required(message='')
+@auth.route('/logout', methods=['GET'])
+@login_required
 def logout():
     logout_user()
     flash('Logged out successfully!', category='success')
