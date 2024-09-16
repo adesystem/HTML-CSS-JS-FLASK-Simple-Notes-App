@@ -10,8 +10,8 @@ html, body {
     align-items: center; 
 }
 
-/* Login Page Styles */
-.login-container {
+/* Login and Sign Up Page Styles */
+.auth-container {
     background-color: white;
     padding: 40px;
     max-width: 400px;
@@ -23,26 +23,26 @@ html, body {
     box-sizing: border-box; 
 }
 
-.login-container h2 {
+.auth-container h2 {
     margin-bottom: 20px;
     font-size: 24px;
     color: #333;
 }
 
-.login-container form {
+.auth-container form {
     display: flex;
     flex-direction: column; 
     gap: 15px; 
 }
 
-.login-container label {
+.auth-container label {
     text-align: left;
     margin-bottom: 5px;
     color: #333;
     font-weight: bold;
 }
 
-.login-container input {
+.auth-container input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -51,7 +51,7 @@ html, body {
     box-sizing: border-box; 
 }
 
-.login-container button {
+.auth-container button {
     background-color: #2c3e50;
     color: white;
     padding: 10px;
@@ -62,26 +62,80 @@ html, body {
     width: 100%; 
 }
 
-.login-container button:hover {
+.auth-container button:hover {
     background-color: #34495e;
 }
 
-.login-container p {
+.auth-container p {
     margin-top: 20px;
     font-size: 14px;
 }
 
-.login-container a {
+.auth-container a {
     color: #2c3e50;
     text-decoration: none;
     font-weight: bold;
 }
 
-.login-container a:hover {
+.auth-container a:hover {
     text-decoration: underline;
 }
 
-/* Minimalist footer */
+
+/* Alert Styles */
+
+#alert-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.alert {
+    cursor: pointer;
+    background-color: #f4f4f4;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+    opacity: 0.9;
+}
+
+.alert-info {
+    background-color: #e7f3fe;
+    color: #31708f;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.alert-error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.alert .close-btn {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 20px;
+    color: inherit;
+}
+
+/* Footer Styles */
 footer {
     background-color: #2c3e50;
     color: white;
