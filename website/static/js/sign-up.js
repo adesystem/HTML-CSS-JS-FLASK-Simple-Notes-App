@@ -28,6 +28,12 @@ document.getElementById("sign-up-form").addEventListener("submit", function(even
         showAlert("Email is required", "error");
         return;
     } else {
+
+        if (email.length > 80) {
+            showAlert("Email must be at most 80 characters", "error");
+            return;
+        }
+
         const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
         if (!pattern.test(email)) {
