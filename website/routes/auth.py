@@ -12,29 +12,32 @@ auth = Blueprint('auth', __name__)
 def login():
 
     if request.method == 'POST':
+        
         email: str = request.form.get('email')
         password: str = request.form.get('password')
 
         user = User.query.filter_by(email=email).first()
 
         if user:
+            
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.notes'))
+                return redirect(url_for('views.profile'))
             else:
                 flash('Incorrect password, try again.', category='error')
+        
         else:
             flash("Email doesn't exists.", category='error')
 
     return render_template('login.html')
 
 @auth.route('/logout')
-@login_required
+@login_required(message='')
 def logout():
     logout_user()
     flash('Logged out successfully!', category='success')
-    return redirect(url_for('auth.login'))  
+    return redirect(url_for('auth.login'))
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def signup():
@@ -46,13 +49,10 @@ def signup():
 
         try:
             
-            user_exists: bool = db.session.query(exists().where(User.name == username)).scalar()
             email_exists: bool = db.session.query(exists().where(User.email == email)).scalar()
             
             if email_exists:
                 raise Exception('Email already exists!')
-            if user_exists:
-                raise Exception('Username already exists!')
 
             new_user_validator: UserValidator = UserValidator(name=username, email=email, password=generate_password_hash(password, method='pbkdf2:sha256'))
             new_user: User = new_user_validator.to_model()
@@ -60,7 +60,9 @@ def signup():
             db.session.commit()
             flash('Account created!', category='success')
             login_user(new_user, remember=True)
-            return redirect(url_for('views.notes'))
+            
+            return redirect(url_for('views.profile'))
+        
         except Exception as e:
             db.session.rollback()
             flash(str(e), category='error')

@@ -5,9 +5,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const flashMessages = JSON.parse(document.getElementById("flash-messages").textContent);
 
-    flashMessages.forEach(function(message) {
+    flashMessages.forEach( function(message) {
         const category = message[0]; 
-        const text = message[1];     
+        const text = message[1];
+        
+        if (!text) {
+            return;
+        }
+        
         showAlert(text, category);   
     });
 });

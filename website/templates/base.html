@@ -23,13 +23,12 @@
             </a>
         </div>
     </footer>
-
+    
+    <script type="module" src="{{ url_for('static', filename='js/validator.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/alert.js') }}"></script>
-
+    
     {% with messages = get_flashed_messages(with_categories=true) %}
-    <script id="flash-messages" type="application/json">
-        {{ messages | tojson }}
-    </script>
+    <script id="flash-messages" type="application/json">{{ messages | tojson }}</script>
     {% endwith %}
 
     {% block scripts %}
