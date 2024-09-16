@@ -20,3 +20,13 @@ export function showAlert(message, type = "info", duration = 5000) {
         }, duration);
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const flashMessages = JSON.parse(document.getElementById("flash-messages").textContent);
+
+    flashMessages.forEach(function(message) {
+        const category = message[0]; 
+        const text = message[1];     
+        showAlert(text, category);   
+    });
+});
