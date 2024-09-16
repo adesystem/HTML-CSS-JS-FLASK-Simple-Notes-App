@@ -24,10 +24,16 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}'
     db.init_app(app)
 
-    from website.routes.views import views
-    from website.routes.auth import auth
+    from .models import User, Note
+
+    from .routes.views import views
+    from .routes.auth import auth
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
+    with app.app_context():
+        db.create_all()
+
     return app
+
