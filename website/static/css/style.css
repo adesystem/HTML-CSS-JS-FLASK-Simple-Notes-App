@@ -113,11 +113,6 @@ html, body {
     opacity: 0.9;
 }
 
-.alert-info {
-    background-color: #e7f3fe;
-    color: #31708f;
-}
-
 .alert-success {
     background-color: #dff0d8;
     color: #3c763d;

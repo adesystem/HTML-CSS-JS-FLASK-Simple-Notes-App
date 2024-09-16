@@ -11,11 +11,19 @@ auth = Blueprint('auth', __name__)
 def login():
 
     if request.method == 'POST':
-        username: str = request.form.get('username')
+        email: str = request.form.get('email')
         password: str = request.form.get('password')
 
-        if username and password:
-            return "SUCCESS"
+        user = User.query.filter_by(email=email).first()
+
+        if user:
+            if check_password_hash(user.password, password):
+                flash('Logged in successfully!', category='success')
+                return redirect(url_for('views.home'))
+            else:
+                flash('Incorrect password, try again.', category='error')
+        else:
+            flash("Email doesn't exists.", category='error')
 
     return render_template('login.html')
 
