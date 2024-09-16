@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from website.models import User, UserValidator
 from sqlalchemy import exists
+from flask_login import login_user, login_required, logout_user, current_user
 from website import db
 
 auth = Blueprint('auth', __name__)
@@ -19,7 +20,8 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
-                return redirect(url_for('views.home'))
+                login_user(user, remember=True)
+                return redirect(url_for('views.notes'))
             else:
                 flash('Incorrect password, try again.', category='error')
         else:
@@ -27,6 +29,12 @@ def login():
 
     return render_template('login.html')
 
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Logged out successfully!', category='success')
+    return redirect(url_for('auth.login'))  
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def signup():
@@ -51,10 +59,11 @@ def signup():
             db.session.add(new_user)
             db.session.commit()
             flash('Account created!', category='success')
+            login_user(new_user, remember=True)
+            return redirect(url_for('views.notes'))
         except Exception as e:
             db.session.rollback()
             flash(str(e), category='error')
-        finally:
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.signup'))
 
     return render_template('sign-up.html')

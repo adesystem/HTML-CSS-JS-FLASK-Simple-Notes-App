@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 
+from flask_login import LoginManager
+
 load_dotenv()
 
 DATABASE_NAME: str = os.getenv("DATABASE_NAME")
@@ -34,6 +36,14 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     return app
 
