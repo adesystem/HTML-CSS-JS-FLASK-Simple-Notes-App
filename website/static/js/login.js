@@ -1,4 +1,3 @@
-import { isEmailValid, isPasswordValid } from "./validator.js";
 import { showAlert } from "./alert.js";
 
 /**
@@ -7,20 +6,16 @@ import { showAlert } from "./alert.js";
 document.getElementById("login-form").addEventListener("submit", function(event) {
     event.preventDefault(); 
 
-    var email = document.getElementById("email").value;
+    var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
-    var emailValidation = isEmailValid(email);
-
-    if (emailValidation !== true) {
-        showAlert(emailValidation, "error");
+    if (!username) {
+        showAlert("Username is required.");
         return;
     }
 
-    var passwordValidation = isPasswordValid(password);
-
-    if (passwordValidation !== true) {
-        showAlert(passwordValidation, "error");
+    if (!password) {
+        showAlert("Password is required.");
         return;
     }
 

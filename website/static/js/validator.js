@@ -20,7 +20,7 @@ export function isUsernameValid(username) {
     const pattern = /^[a-zA-Z0-9_]+$/;
 
     if (!pattern.test(username)) {
-        return "Username can only contain forbidden characters.";
+        return "Username cannot contain forbidden characters.";
     }
 
     return true;

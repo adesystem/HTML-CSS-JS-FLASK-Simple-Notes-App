@@ -3,7 +3,9 @@
  * Displays an alert message for each flash message.
  */
 document.addEventListener("DOMContentLoaded", () => {
-    const flashMessages = JSON.parse(document.getElementById("flash-messages").textContent);
+    const flashMessagesContainer = document.getElementById("flash-messages");
+
+    const flashMessages = JSON.parse(flashMessagesContainer.textContent);
 
     flashMessages.forEach( function(message) {
         const category = message[0]; 
@@ -13,7 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         
-        showAlert(text, category);   
+        showAlert(text, category);
+
+        flashMessagesContainer.textContent = "";
     });
 });
 
@@ -24,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * @param {string} [type="info"] - The type of alert. Defaults to "info".
  * @param {number} [duration=5000] - The duration in milliseconds for which the alert should be displayed. Defaults to 5000.
  */
-export function showAlert(message, type = "info", duration = 5000) {
+export function showAlert(message, type = "error", duration = 5000) {
     const alertContainer = document.getElementById("alert-container");
 
     const alertBox = document.createElement("div");
