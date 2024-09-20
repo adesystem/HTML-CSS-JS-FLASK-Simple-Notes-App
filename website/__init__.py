@@ -21,6 +21,12 @@ db = SQLAlchemy()
 
 
 def create_app():
+    """
+    Creates and configures the Flask application.
+    Returns:
+        app (Flask): The configured Flask application.
+    """
+    ...
     app = Flask(__name__)
     app.config['SECRET_KEY'] = SECRET_KEY
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}'

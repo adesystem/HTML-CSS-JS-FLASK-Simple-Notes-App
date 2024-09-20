@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 
 from pydantic import BaseModel, Field, PositiveInt, EmailStr
-from typing import Optional, List
+from typing import Optional, List, Literal
 from datetime import datetime
 
 
@@ -41,8 +41,10 @@ class NoteValidator(BaseModel):
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
-    name = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    register_date = db.Column(db.DateTime(timezone=True), default=func.now())
+    account_type = db.Column(db.String(5), nullable=False, default='user')
     
     notes = db.relationship('Note', backref='user', lazy=True)
 
@@ -50,7 +52,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.name}')"
 
     def to_validator(self) -> 'UserValidator':
-        return UserValidator(id=self.id, email=self.email, name=self.name, password=self.password, notes=[note.to_validator() for note in self.notes])
+        return UserValidator(id=self.id, email=self.email, name=self.name, password=self.password, register_date=self.register_date, account_type = self.account_type)
 
 
 # Pydantic model for User
@@ -59,10 +61,12 @@ class UserValidator(BaseModel):
     email: EmailStr = Field(..., title="Email of the user", max_length=80)
     name: str = Field(..., title="Name of the user", min_length=6, max_length=30)
     password: str = Field(..., title="Password of the user", min_length=6, max_length=120)
+    register_date: Optional[datetime] = Field(default_factory=datetime.now, title="Date of registration")
+    account_type: Literal['user', 'admin'] = Field('user', title="Type of account")
     notes: Optional[List[NoteValidator]] = Field(None, title="Notes of the user")
 
     def __repr__(self) -> str:
         return f"User('{self.name}')"
 
     def to_model(self) -> 'User':
-        return User(email=self.email, name=self.name, password=self.password)
+        return User(email=self.email, name=self.name, password=self.password, register_date=self.register_date, account_type=self.account_type)
