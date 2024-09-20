@@ -16,9 +16,9 @@ def profile():
 
     # total_notes = Note.query.filter_by(user_id=current_user.id).count()
 
-    return render_template('sidebar_base.html')
+    return render_template('base.html')
 
 @views.route('notes')
 @login_required
 def notes():
-    return render_template('sidebar_base.html')
+    return render_template('base.html')

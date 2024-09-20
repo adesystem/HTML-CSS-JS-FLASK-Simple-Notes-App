@@ -44,7 +44,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     register_date = db.Column(db.DateTime(timezone=True), default=func.now())
-    account_type = db.Column(db.String(5), nullable=False, default='admin')
+    account_type = db.Column(db.String(5), nullable=False, default='user')
     
     notes = db.relationship('Note', backref='user', lazy=True)
 
@@ -62,7 +62,7 @@ class UserValidator(BaseModel):
     name: str = Field(..., title="Name of the user", min_length=6, max_length=30)
     password: str = Field(..., title="Password of the user", min_length=6, max_length=120)
     register_date: Optional[datetime] = Field(default_factory=datetime.now, title="Date of registration")
-    account_type: Literal['user', 'admin'] = Field('admin', title="Type of account")
+    account_type: Literal['user', 'admin'] = Field('user', title="Type of account")
     notes: Optional[List[NoteValidator]] = Field(None, title="Notes of the user")
 
     def __repr__(self) -> str:

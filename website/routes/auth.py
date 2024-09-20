@@ -65,3 +65,8 @@ def signup():
             return redirect(url_for('auth.signup'))
 
     return render_template('sign-up.html')
+
+@auth.route('admin')
+@login_required
+def admin():
+    return 'admin'
