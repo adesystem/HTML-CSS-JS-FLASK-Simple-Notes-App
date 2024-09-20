@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>User Profile</h2>
+    <div class="profile-icon">
+        <i class="fas fa-user"></i>
+    </div>
+    <div class="profile-details">
+        <p><strong>Username:</strong> {{ current_user.name }}</p>
+        <p><strong>Email:</strong> {{ current_user.email }}</p>
+        <p><strong>Registration Date:</strong> {{ current_user.register_date.strftime('%Y-%m-%d') }}</p>
+        <p><strong>Total Notes:</strong> {{ total_notes }}</p>
+        {% if current_user.account_type == 'admin' %}
+            <p><strong>Account Type:</strong> Admin</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

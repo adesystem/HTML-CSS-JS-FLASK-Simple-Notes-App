@@ -45,8 +45,12 @@ def signup():
 
         try:
             
+            username_exists: bool = db.session.query(exists().where(User.name == username)).scalar()
             email_exists: bool = db.session.query(exists().where(User.email == email)).scalar()
-            
+
+            if username_exists:
+                raise Exception('Username already exists!')
+
             if email_exists:
                 raise Exception('Email already exists!')
 
@@ -69,4 +73,9 @@ def signup():
 @auth.route('admin')
 @login_required
 def admin():
-    return 'admin'
+    if current_user.account_type == 'admin':
+        return 'admin'
+    else:
+        flash('You are not an admin!', category='error')
+        return redirect(url_for('views.profile'))
+

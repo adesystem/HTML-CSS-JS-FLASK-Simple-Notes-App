@@ -14,9 +14,9 @@ def home():
 @login_required
 def profile():
 
-    # total_notes = Note.query.filter_by(user_id=current_user.id).count()
+    total_notes: int = Note.query.filter_by(user_id=current_user.id).count()
 
-    return render_template('base.html')
+    return render_template('profile.html', total_notes=total_notes)
 
 @views.route('notes')
 @login_required
