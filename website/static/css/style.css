@@ -207,9 +207,10 @@ footer {
     text-decoration: underline;
 }
 
-/* Profile Page Styles */
+/* Account Page Styles */
 
-.profile-container {
+/* Ogólny styl konta użytkownika */
+.account-container {
     background-color: white;
     padding: 40px;
     max-width: 600px;
@@ -219,48 +220,26 @@ footer {
     text-align: center;
 }
 
-.profile-container h2 {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.profile-icon {
-    text-align: center;
+.account-icon i {
+    font-size: 60px;
     margin-bottom: 20px;
 }
 
-.profile-icon i {
-    font-size: 80px;
-    color: #2c3e50; 
-}
-
-.profile-details p {
+.account-details p {
     font-size: 18px;
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
 
-.profile-details strong {
-    color: #2c3e50;
-}
-
-.profile-actions {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.profile-actions .btn {
+.account-actions .btn {
     background-color: #2c3e50;
     color: white;
     padding: 10px 20px;
-    text-decoration: none;
+    border: none;
     border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
 }
 
-.profile-actions .btn:hover {
+.account-actions .btn:hover {
     background-color: #34495e;
 }
-
-
-
