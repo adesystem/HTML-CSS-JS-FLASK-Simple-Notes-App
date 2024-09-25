@@ -12,7 +12,7 @@
     <nav class="navbar">
         <ul>
             {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('views.account') }}"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="{{ url_for('views.account') }}"><i class="fas fa-user"></i> Account</a></li>
                 <li><a href="{{ url_for('views.notes') }}"><i class="fas fa-sticky-note"></i> Notes</a></li>
                 <li><a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             {% else %}
