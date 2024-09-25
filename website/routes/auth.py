@@ -7,7 +7,7 @@ from website import db
 
 auth = Blueprint('auth', __name__)
 
-
+# Login
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -44,6 +44,7 @@ def login():
     
     return render_template('login.html')
 
+# Logout
 @auth.route('/logout', methods=['GET'])
 @login_required
 def logout():
@@ -51,6 +52,7 @@ def logout():
     flash('Logged out successfully!', category='success')
     return redirect(url_for('auth.login'))
 
+# Sign up
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def signup():
 
@@ -100,20 +102,36 @@ def signup():
 
     return render_template('sign-up.html')
 
+# Change username
 @auth.route('/account/username', methods=['POST'])
 @login_required
 def change_username():
     
     username: str = request.form.get('username')
 
+    password: str = request.form.get('password')
+
     if not username:
         flash('Username is required.', category='error')
         return redirect(url_for('views.account'))
+    
+    if not password:
+        flash('Password is required.', category='error')
+        return redirect(url_for('views.account'))
 
     try:
-            
             user = User.query.filter_by(id=current_user.id).first()
-    
+
+            if (not check_password_hash(user.password, password)):
+                flash('Incorrect password!', category='error')
+                return redirect(url_for('views.account'))
+
+            username_exists: bool = db.session.query(exists().where(User.name == username)).scalar()
+
+            if (username_exists):
+                flash('Username already exists!', category='error')
+                return redirect(url_for('views.account'))
+            
             user.name = username
 
             user_validator = user.to_validator()
@@ -129,19 +147,35 @@ def change_username():
         flash(str(e), category='error')
         return redirect(url_for('views.account'))
 
+# Change email
 @auth.route('/account/email', methods=['POST'])
 @login_required
 def change_email():
     
     email: str = request.form.get('email')
+    password: str = request.form.get('password')
 
     if not email:
         flash('Email is required.', category='error')
         return redirect(url_for('views.account'))
     
+    if not password:
+        flash('Password is required.', category='error')
+        return redirect(url_for('views.account'))
+    
     try:
 
         user = User.query.filter_by(id=current_user.id).first()
+
+        if (not check_password_hash(user.password, password)):
+            flash('Incorrect password!', category='error')
+            return redirect(url_for('views.account'))
+
+        email_exists: bool = db.session.query(exists().where(User.email == email)).scalar()
+
+        if (email_exists):
+            flash('Email already exists!', category='error')
+            return redirect(url_for('views.account'))
 
         user.email = email
 
@@ -158,6 +192,7 @@ def change_email():
         flash(str(e), category='error')
         return redirect(url_for('views.account'))
 
+# Change password
 @auth.route('/account/password', methods=['POST'])
 @login_required
 def change_password():
@@ -199,7 +234,7 @@ def change_password():
         flash(str(e), category='error')
         return redirect(url_for('views.account'))
     
-
+# Delete account
 @auth.route('/account/delete', methods=['POST'])
 @login_required
 def delete_account():
@@ -229,6 +264,7 @@ def delete_account():
         flash(str(e), category='error')
         return redirect(url_for('views.account'))
 
+# Admin Panel
 @auth.route('admin')
 @login_required
 def admin():

@@ -7,8 +7,14 @@
         <i class="fas fa-user"></i>
     </div>
     <div class="account-details">
-        <p><strong>Username:</strong> {{ current_user.name }}</p>
-        <p><strong>Email:</strong> {{ current_user.email }}</p>
+        <p>
+            <strong>Username:</strong> {{ current_user.name }}
+            <i class="fas fa-edit clickable-icon" id="edit-username"></i>
+        </p>
+        <p>
+            <strong>Email:</strong> {{ current_user.email }}
+            <i class="fas fa-edit clickable-icon" id="edit-email"></i>
+        </p>
         <p><strong>Registration Date:</strong> {{ current_user.register_date.strftime('%d-%m-%Y') }}</p>
         <p><strong>Total Notes:</strong> {{ total_notes }}</p>
         {% if current_user.account_type == 'admin' %}
@@ -23,6 +29,30 @@
                 </button>
         </div>
     </div>
+
+    <dialog class="dialogue-window" id="change-username-window">
+        <h2>Change Username</h2>
+        <form action=" {{ url_for('auth.change_username')}}" method="POST" id="change-username-form">
+            <label for="username">New Username</label>
+        <input type="text" id="username" name="username">
+            <label for="password">Enter Password To Confirm:</label>
+        <input type="password" id="username-password" name="password">
+        <button type="submit" class="btn" id="confirm-username">Confirm</button>
+        <button type="button" class="btn" id="cancel-username">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog class="dialogue-window" id="change-email-window">
+        <h2>Change Email</h2>
+        <form action=" {{ url_for('auth.change_email') }}" method="POST" id="change-email-form">
+            <label for="email">New Email</label>
+        <input type="email" id="email" name="email">
+        <label for="password">Enter Password To Confirm:</label>
+        <input type="password" id="email-password" name="password">
+        <button type="submit" class="btn" id="confirm-email">Confirm</button>
+        <button type="button" class="btn" id="cancel-email">Cancel</button>
+        </form>
+    </dialog>
 
     <dialog class="dialogue-window" id="change-password-window">
         <h2>Change Password</h2>
@@ -53,4 +83,5 @@
 {% block scripts %}
     <script type="module" src="{{ url_for('static', filename='js/change-password.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/delete-account.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/account.js') }}"></script>
 {% endblock %}
