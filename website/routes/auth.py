@@ -104,14 +104,3 @@ def signup():
             return redirect(url_for('auth.signup'))
 
     return render_template('sign-up.html', active_page='sign-up')
-
-# Admin Panel
-@auth.route('admin')
-@login_required
-def admin():
-    if current_user.account_type == 'admin':
-        return 'admin'
-    else:
-        flash('You are not an admin!', category='error')
-        return redirect(url_for('views.notes'))
-

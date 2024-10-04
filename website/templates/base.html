@@ -19,7 +19,7 @@
         <a href="{{ url_for('auth.signup') }}" class="{% if active_page == 'sign-up' %}active{% endif %}" title="Sign Up"><i class="fa fa-user-plus"></i><span>Sign Up</span></a>
         {% endif %}
         {% if current_user.account_type == 'admin' %}
-        <a href="{{ url_for('auth.admin') }}" class="{% if active_page == 'admin_panel' %}active{% endif %}" title="Admin Panel"><i class="fa fa-legal"></i><span>Admin Panel</span></a>
+        <a href="{{ url_for('admin.admin_panel') }}" class="{% if active_page == 'admin' %}active{% endif %}" title="Admin Panel"><i class="fa fa-legal"></i><span>Admin Panel</span></a>
         {% endif %}
     </nav>
 
