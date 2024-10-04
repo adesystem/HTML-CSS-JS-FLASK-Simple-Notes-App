@@ -33,6 +33,8 @@ usernameClose.addEventListener('click', () => {
     usernameModal.close();
 });
 
+
+// CHANGING USERNAME
 usernameForm.addEventListener('submit', (event) => {
     
     function clearModal() {
@@ -72,6 +74,7 @@ emailClose.addEventListener('click', () => {
     emailModal.close();
 });
 
+// CHANGING EMAIL
 emailForm.addEventListener('submit', (event) => {
     
     function clearModal() {
@@ -110,8 +113,8 @@ passwordClose.addEventListener('click', () => {
     passwordModal.close();
 });
 
+// CHANGING PASSWORD
 passwordForm.addEventListener('submit', (event) => {
-    
     function clearModal() {
         document.getElementById('current-password').value = '';
         document.getElementById('new-password').value = '';
@@ -163,6 +166,7 @@ deleteClose.addEventListener('click', () => {
     deleteModal.close();
 });
 
+// DELETING ACCOUNT
 deleteForm.addEventListener('submit', (event) => {
     event.preventDefault();
 

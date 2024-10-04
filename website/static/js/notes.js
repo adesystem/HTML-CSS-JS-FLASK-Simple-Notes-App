@@ -31,6 +31,16 @@ noteAddForm.addEventListener('submit', (event) => {
     noteAddForm.submit();
 });
 
+
+/**
+ * Fetches note data from the server for a given note ID.
+ *
+ * @async
+ * @function getNoteData
+ * @param {string} noteId - The ID of the note to fetch.
+ * @returns {Promise<Object>} The note data as a JSON object.
+ * @throws {Error} If the fetch operation fails or the response is not ok.
+ */
 async function getNoteData(noteId) {
     const url = `/user/notes/get/${noteId}`;
 
@@ -50,6 +60,14 @@ async function getNoteData(noteId) {
     }
 }
 
+/**
+ * Displays a note in a modal dialog by fetching its data from the server.
+ *
+ * @async
+ * @function viewNote
+ * @param {string} noteId - The ID of the note to view.
+ * @returns {void}
+ */
 async function viewNote(noteId) {
     
     const viewNoteModal = document.getElementById('view-note-modal');
@@ -73,6 +91,14 @@ async function viewNote(noteId) {
     });
 }
 
+/**
+ * Displays a note in an editable modal dialog by fetching its data from the server.
+ *
+ * @async
+ * @function editNote
+ * @param {string} noteId - The ID of the note to edit.
+ * @returns {void}
+ */
 async function editNote(noteId) {
 
     const editNoteModal = document.getElementById('edit-note-modal');
@@ -122,6 +148,13 @@ async function editNote(noteId) {
     });
 }
 
+/**
+ * Displays a confirmation modal dialog for deleting a note.
+ *
+ * @function deleteNote
+ * @param {string} noteId - The ID of the note to delete.
+ * @returns {void}
+ */
 function deleteNote (noteId) {
 
     const deleteNoteModal = document.getElementById('delete-note-modal');
@@ -145,6 +178,14 @@ function deleteNote (noteId) {
 
 const notesContainer = document.querySelector('.notes');
 
+
+/**
+ * Event listener for handling click events on the notes container.
+ *
+ * @event
+ * @param {Event} event - The event object.
+ * @returns {void}
+ */
 notesContainer.addEventListener('click', (event) => {
     
     // View note
