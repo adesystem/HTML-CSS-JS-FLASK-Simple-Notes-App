@@ -46,7 +46,7 @@ def add_note():
         return redirect(url_for('views.notes'))
         
     except Exception as e:
-        db.rollback()
+        db.session.rollback()
         print(str(e))
         flash('AN ERROR OCCURED WHILE ADDING THE NOTE, TRY AGAIN LATER', category='error')
         return redirect(url_for('views.notes'))
@@ -115,7 +115,7 @@ def edit_note(id: int):
         return redirect(url_for('views.notes'))
     
     except Exception as e:
-        db.rollback()
+        db.session.rollback()
         print(str(e))
         flash("AN ERROR OCCURED WHILE EDITING THE NOTE, TRY AGAIN LATER", category='error')
         return redirect(url_for('views.notes'))
@@ -144,7 +144,7 @@ def delete_note(id: int):
         return redirect(url_for('views.notes'))
     
     except Exception as e:
-        db.rollback()
+        db.session.rollback()
         print(str(e))
         flash("AN ERROR OCCURED WHILE DELETING THE NOTE, TRY AGAIN LATER", category='error')
         return redirect(url_for('views.notes'))

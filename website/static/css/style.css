@@ -401,6 +401,7 @@ dialog {
 
 dialog::backdrop {
     background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
 
 @media(max-width: 1500px) {
@@ -438,7 +439,7 @@ dialog::backdrop {
     top: 60px;
     left: 0;
     width: 100%;
-    z-index: 1001;
+    z-index: 1001 !important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -461,6 +462,7 @@ dialog::backdrop {
     color: #333;
     opacity: 0.9;
     text-align: center;
+    z-index: 1001;
 }
 
 .alert-success {

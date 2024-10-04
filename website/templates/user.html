@@ -11,19 +11,23 @@
         <p>User<i class="fa fa-user"></i></p>
     {% endif %}
     <div class="account-details">
-        <p>
+        <p title="Username">
             <strong>Username:</strong> {{ current_user.name }}
-            <i class="fa fa-edit clickable-icon" id="change-username"></i>
+            <i class="fa fa-edit clickable-icon" id="change-username" title="Change Username"></i>
         </p>
-        <p>
+        <p title="Email">
             <strong>Email:</strong> {{ current_user.email }}
-            <i class="fa fa-edit clickable-icon" id="change-email"></i>
+            <i class="fa fa-edit clickable-icon" id="change-email" title="Change Email"></i>
         </p>
-        <p><strong>Registration Date:</strong> {{ current_user.register_date.strftime('%d-%m-%Y') }}</p>
-        <p><strong>Total Notes:</strong> {{ total_notes }}</p>
+        <p title="Registration Date">
+            <strong>Registration Date:</strong> {{ current_user.register_date.strftime('%d-%m-%Y') }}
+        </p>
+        <p title="Total Notes">
+            <strong>Total Notes:</strong> {{ total_notes }}
+        </p>
         <div class="account-actions">
-            <button id="change-password"><i class="fa fa-key"></i>Change Password</button>
-            <button id="delete-account"><i class="fa fa-trash"></i>Delete Account</button>
+            <button id="change-password" title="Change Password"><i class="fa fa-key"></i>Change Password</button>
+            <button id="delete-account" title="Delete Account"><i class="fa fa-trash"></i>Delete Account</button>
         </div>
     </div>
 </div>
