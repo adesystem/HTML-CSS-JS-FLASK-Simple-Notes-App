@@ -165,11 +165,12 @@ form input[type=text], form input[type=password] {
     font-size: 1.2em;
 }
 
-form input[type=submit], form button {
+form input[type=submit], form button, .account-actions button {
     padding: 10px 20px;
     width: 100%;
     border: none;
     border-radius: 10px;
+    white-space: nowrap;
     font-size: 1.2em;
     background-color: var(--primary-color);
     color: var(--hover-color);
@@ -177,7 +178,7 @@ form input[type=submit], form button {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-form input[type=submit]:hover, form button:hover {
+form input[type=submit]:hover, form button:hover, .account-actions button:hover {
     background-color: var(--hover-color);
     color: var(--primary-color);
     transform: scale(1.05);
@@ -233,13 +234,17 @@ form input[type=submit]:hover, form button:hover {
     transform: scale(1.05);
 }
 
-.modal-controls {
+.modal-controls, .account-actions {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 10px;
     margin-top: 20px;
+}
+
+.account-actions button i {
+    margin-right: 5px;
 }
 
 dialog {

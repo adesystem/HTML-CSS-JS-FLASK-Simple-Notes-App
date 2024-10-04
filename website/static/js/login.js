@@ -10,12 +10,12 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     var password = document.getElementById("password").value;
 
     if (!username) {
-        showAlert("Username is required.");
+        showAlert("USERNAME IS REQUIRED");
         return;
     }
 
     if (!password) {
-        showAlert("Password is required.");
+        showAlert("PASSWORD IS REQUIARED");
         return;
     }
 

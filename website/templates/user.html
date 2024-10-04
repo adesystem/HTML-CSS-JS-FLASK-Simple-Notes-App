@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %}User{% endblock %}
+
 {% block content %}
 <div class="account">
     <h2>Account</h2>
@@ -20,6 +22,8 @@
         <p><strong>Registration Date:</strong> {{ current_user.register_date.strftime('%d-%m-%Y') }}</p>
         <p><strong>Total Notes:</strong> {{ total_notes }}</p>
         <div class="account-actions">
+            <button id="change-password"><i class="fa fa-key"></i>Change Password</button>
+            <button id="delete-account"><i class="fa fa-trash"></i>Delete Account</button>
         </div>
     </div>
 </div>
@@ -44,6 +48,30 @@
         <div class="modal-controls">
         <input type="submit" value="Accept"></button>
         <button type="button" id="close-change-email">Cancel</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="change-password-modal">
+    <form id="change-password-form" action="{{ url_for('account.change_password') }}" method="POST">
+        <h2>Change Password</h2>
+        <input type="password" id="current-password" name="current-password" placeholder="Current Password">
+        <input type="password" id="new-password" name="new-password" placeholder="New Password">
+        <div class="modal-controls">
+        <input type="submit" value="Accept"></button>
+        <button type="button" id="close-change-password">Cancel</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="delete-account-modal">
+    <form id="delete-account-form" action="{{ url_for('account.delete_account') }}" method="POST">
+        <h2>Delete Account</h2>
+        <p>Are you sure you want to delete your account? Confirm it with your password!</p>
+        <input type="password" id="delete-password" name="password" placeholder="Password">
+        <div class="modal-controls">
+            <input type="submit" value="Accept"></button>
+            <button type="button" id="close-delete-account">Cancel</button>
         </div>
     </form>
 </dialog>
