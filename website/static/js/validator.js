@@ -6,21 +6,21 @@
  */
 export function isUsernameValid(username) {
     if (!username) {
-        return "Username is requiared.";
+        return "USERNAME IS REQUIRED";
     }
 
     if (username.length < 6) {
-        return "Username is too short, it must be at least 6 characters.";
+        return "USERNAME IS TOO SHORT, IT MUST BE AT LEAST 6 CHARACTERS";
     }
 
     if (username.length > 30) {
-        return "Username is too long, it must be at most 30 characters.";
+        return "USERNAME IS TOO LONG, IT MUST BE AT MOST 30 CHARACTERS";
     }
 
     const pattern = /^[a-zA-Z0-9_]+$/;
 
     if (!pattern.test(username)) {
-        return "Username cannot contain forbidden characters.";
+        return "USERNAME CANNOT CONTAIN SPECIAL CHARACTERS";
     }
 
     return true;
@@ -35,17 +35,17 @@ export function isUsernameValid(username) {
 export function isEmailValid(email) {
 
     if (!email) {
-        return "Email is required.";
+        return "EMAIL IS REQUIRED";
     }
 
     if (email.length > 80) {
-        return "Email must be at most 80 characters.";
+        return "EMAIL MUST BE AT MOST 80 CHARACTERS";
     }
 
     const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,80}$/;
     
     if (!pattern.test(email)) {
-        return "Email is not valid.";
+        return "EMAIL IS INVALID";
     }
 
     return true;
@@ -63,21 +63,52 @@ export function isEmailValid(email) {
  */
 export function isPasswordValid(password) {
     if (!password) {
-        return "Password is required.";
+        return "PASSWORD IS REQUIRED";
     }
 
     if (password.length < 6) {
-        return "Password is too short, it must be at least 6 characters.";
+        return "PASSWORD IS TOO SHORT, IT MUST BE AT LEAST 6 CHARACTERS";
     }
 
     if (password.length > 120) {
-        return "Password is too long, it must be at most 120 characters.";
+        return "PASSWORD IS TOO LONG, IT MUST BE AT MOST 120 CHARACTERS";
     }
 
     const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,120}$/;
 
     if (!pattern.test(password)) {
-        return "Password must contain at least one number, one lowercase and one uppercase letter.";
+        return "PASSWORDD MUST CONTAIN AT LEAST ONE NUMBER, ONE LOWERCASE LETTER, AND ONE UPPERCASE LETTER";
+    }
+
+    return true;
+}
+
+/**
+ * Validates a note's title and content.
+ *
+ * @param {string} title - The title of the note.
+ * @param {string} content - The content of the note.
+ * @returns {string|boolean} - Returns a string with an error message if the note is invalid, or true if the note is valid.
+ */
+export function isNoteValid(title, content) {
+    if (!title) {
+        return "TITLE IS REQUIRED.";
+    }
+
+    if (title.length < 3) {
+        return "TITLE IS TOO SHORT, IT MUST BE AT LEAST 3 CHARACTERS.";
+    }
+
+    if (title.length > 100) {
+        return "TITLE IS TOO LONG, IT MUST BE AT MOST 100 CHARACTERS.";
+    }
+
+    if (!content) {
+        return "CONTENT IS REQUIRED";
+    }
+
+    if (content.length > 65535) {
+        return "CONTENT IS TOO LONG, IT MUST BE AT MOST 65535 CHARACTERS.";
     }
 
     return true;
