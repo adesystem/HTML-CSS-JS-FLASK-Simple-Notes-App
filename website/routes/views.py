@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, url_for, render_template, request
+from flask import jsonify, Blueprint, flash, redirect, url_for, render_template, request
 from flask_login import login_required, current_user
 from website import db
 from website.models import Note, NoteValidator
@@ -50,6 +50,32 @@ def add_note():
         print(str(e))
         flash('AN ERROR OCCURED WHILE ADDING THE NOTE, TRY AGAIN LATER', category='error')
         return redirect(url_for('views.notes'))
+    
+@views.route('user/notes/get/<int:id>', methods=['GET'])
+@login_required
+def get_note(id: int):
+    
+        try:
+            note = Note.query.filter_by(id=id).first()
+    
+            if not note:
+                flash('NOTE NOT FOUND', category='error')
+                return redirect(url_for('views.notes'))
+            
+            if note.user_id != current_user.id:
+                flash('NO REQUIRED PERMISSIONS', category='error')
+                return redirect(url_for('views.notes'))
+            
+            return jsonify({
+                'title': note.title,
+                'content': note.content,
+                'date': note.date.strftime('%d-%m-%Y')
+            }), 200
+        
+        except Exception as e:
+            print(str(e))
+            flash('AN ERROR OCCURED WHILE GETTING THE NOTE, TRY AGAIN LATER', category='error')
+            return redirect(url_for('views.notes'))
 
 @views.route('user/notes/edit/<int:id>', methods=['POST'])
 @login_required

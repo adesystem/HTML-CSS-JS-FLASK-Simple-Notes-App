@@ -157,6 +157,12 @@ form {
     padding: 10px 10px;
 }
 
+form p {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
 form input[type=text], form input[type=password], form textarea {
     padding: 10px 20px;
     width: 100%;

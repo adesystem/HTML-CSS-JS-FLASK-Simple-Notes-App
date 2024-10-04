@@ -31,71 +31,39 @@ noteAddForm.addEventListener('submit', (event) => {
     noteAddForm.submit();
 });
 
+const notesContainer = document.querySelector('.notes');
 
+notesContainer.addEventListener('click', (event) => {
 
-// const notesContainer = document.querySelector('.notes-container');
-
-// function createNoNoteParagraph() {
-
-//     const noNotesParagraph = document.createElement('p');
-
-//     if (!notesContainer.querySelector('.note')) {
-//         noNotesParagraph.textContent = 'No notes found';
-//         noNotesParagraph.classList.add('no-notes');
-//         notesContainer.appendChild(noNotesParagraph);
-//     } else {
-//         noNotesParagraph.remove();
-//     }
-
-// }
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     createNoNoteParagraph();
-// });
-
-// notesContainer.addEventListener('click', (event) => {
-
-//     // Note Deletion
-//     if (event.target && event.target.classList.contains('note-delete-trigger')) {
+    // View Note
+    if (event.target && event.target.classList.contains('note-view')) {
         
-//         const noteDeleteModal = document.getElementById('note-delete-Modal');
-//         const noteDeleteConfirm = document.getElementById('note-delete-confirm');
-//         const noteDeleteCancel = document.getElementById('note-delete-cancel');
+        const noteViewCancel = document.getElementById('close-view-note');
 
-//         noteDeleteModal.showModal();
+        const viewNoteModal = document.getElementById('view-note-modal');
+        const viewNoteForm = document.getElementById('view-note-form');
         
-//         const noteElement = event.target.closest('.note');
-//         const noteId = noteElement.getAttribute('note-id');
+        noteViewCancel.addEventListener('click', () => {
+            document.getElementById('view-note-title').value = '';
+            document.getElementById('view-note-content').textContent = '';
+            viewNoteModal.close();
+        });
 
-//         noteDeleteConfirm.onclick = () => {
-//             fetch('/notes/delete/' + noteId, {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 }
-//             })
-//             .then(response => {
-//                 if (response.ok) {
-//                     noteElement.remove();
-//                     showAlert('Note deleted successfully', 'success');
-//                 } else {
-//                     showAlert('Note deletion failed', 'error');
-//                 }
-//                 noteDeleteModal.close();
-//                 createNoNoteParagraph();
-//             })
-//             .catch(error => {
-//                 console.error('Error:', error);
-//                 showAlert('Note deletion failed', 'error');
-//                 noteDeleteModal.close();
-//                 createNoNoteParagraph();
-//             });
-//         };
+        const noteId = event.target.closest('.note').dataset.id;
 
-//         noteDeleteCancel.onclick = () => {
-//             noteDeleteModal.close();
-//             createNoNoteParagraph();
-//         };
-
-//     }
-// });
+        fetch(`/user/notes/get/${noteId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('view-note-title').value = data.title;
+                    document.getElementById('view-note-content').textContent = data.content;
+                    document.getElementById('view-note-date').textContent = data.date;
+                    viewNoteModal.showModal();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('AN ERROR OCCURRED. PLEASE TRY AGAIN.');
+            });
+    }
+});

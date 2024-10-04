@@ -9,9 +9,9 @@
     </button>
 
     {% for note in notes %}
-    <div class="note" note-id="{{ note.id }}">
+    <div class="note" data-id="{{ note.id }}">
         <div class="note-actions">
-            <i class="fa fa-book" title="View Note"></i>
+            <i class="fa fa-book note-view" title="View Note"></i>
             <i class="fa fa-edit" title="Edit Note"></i>
             <i class="fa fa-trash" title="Delete Note"></i>
         </div>
@@ -30,6 +30,18 @@
         <div class="modal-controls">
             <input type="submit" value="Add">
             <button type="button" id="cancel-add-note">Cancel</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="view-note-modal">
+    <form id="view-note-form">
+        <h2>View Note</h2>
+        <input type="text" id="view-note-title" name="title" readonly>
+        <textarea id="view-note-content" name="content" readonly></textarea>
+        <p id="view-note-date"></p>
+        <div class="modal-controls">
+            <button type="button" id="close-view-note">Close</button>
         </div>
     </form>
 </dialog>
