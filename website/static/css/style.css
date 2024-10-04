@@ -157,7 +157,7 @@ form {
     padding: 10px 10px;
 }
 
-form input[type=text], form input[type=password] {
+form input[type=text], form input[type=password], form textarea {
     padding: 10px 20px;
     width: 100%;
     border: 2px solid var(--primary-color);
@@ -165,7 +165,17 @@ form input[type=text], form input[type=password] {
     font-size: 1.2em;
 }
 
-form input[type=submit], form button, .account-actions button {
+form textarea {
+    max-width: 100%;
+    height: 300px;
+    resize: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 1.1em;
+    box-sizing: border-box;
+}
+
+form input[type=submit], form button, .account-actions button, .notes button {
     padding: 10px 20px;
     width: 100%;
     border: none;
@@ -178,7 +188,7 @@ form input[type=submit], form button, .account-actions button {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-form input[type=submit]:hover, form button:hover, .account-actions button:hover {
+form input[type=submit]:hover, form button:hover, .account-actions button:hover, .notes button:hover {
     background-color: var(--hover-color);
     color: var(--primary-color);
     transform: scale(1.05);
@@ -226,11 +236,11 @@ form input[type=submit]:hover, form button:hover, .account-actions button:hover 
 
 .clickable-icon {
     font-size: 1em;
-    color: var(--primary-color);
+    color: var(--hover-color);
     transition: transform 0.3s ease;}
 
 .clickable-icon:hover {
-    color: var(--hover-color);
+    color: var(--primary-color);
     transform: scale(1.05);
 }
 
@@ -246,6 +256,123 @@ form input[type=submit]:hover, form button:hover, .account-actions button:hover 
 .account-actions button i {
     margin-right: 5px;
 }
+
+.notes {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 600px; 
+    max-height: 65vh; 
+    margin: 20px auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+.notes h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.notes button {
+    background-color: var(--primary-color);
+    color: var(--hover-color);
+    font-size: 1.3em; 
+    border-radius: 50px; 
+    padding: 12px 20px; 
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
+    margin: 10px 0;
+    cursor: pointer;
+    text-align: center;
+}
+
+.notes button i {
+    margin-right: 10px;
+    font-size: 1.5em; 
+}
+
+.notes button p {
+    margin: 0;
+    font-size: 1em; 
+    color: inherit; 
+}
+
+.notes button:hover {
+    background-color: var(--hover-color); 
+    color: var(--primary-color); 
+    transform: scale(1.03); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+}
+
+.note {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.note h3 {
+    font-size: 1.4em; 
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--hover-color);
+    word-break: break-word;
+}
+
+.note-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.note-actions i {
+    font-size: 1.2em; 
+    color: var(--hover-color);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.note-actions i:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.note hr {
+    border: 0;
+    height: 1px;
+    background: var(--third-color);
+    margin: 10px 0;
+    width: 100%;
+}
+
+.note p {
+    font-size: 1em; 
+    color: var(--text-color);
+    margin-top: 10px;
+}
+
 
 dialog {
     flex-direction: column;

@@ -1,48 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="notes-container">
+<div class="notes">
     <h2>Notes</h2>
-    <button type="button" class="btn" id="note-add-trigger">
-        <i class="fas fa-plus"></i>
+    <button type="button" class="btn" id="add-note">
+        <i class="fa fa-plus"></i>
+        <p>Add Note</p>
     </button>
 
     {% for note in notes %}
     <div class="note" note-id="{{ note.id }}">
-        <h3>{{ note.title }}</h3>
-        <p>{{ note.content }}</p>
         <div class="note-actions">
-            <button type="button" class="btn note-edit-trigger">
-                <i class="fas fa-edit"></i>
-            </button>
-            <button type="button" class="btn note-delete-trigger">
-                <i class="fas fa-trash"></i>
-            </button>
+            <i class="fa fa-book" title="View Note"></i>
+            <i class="fa fa-edit" title="Edit Note"></i>
+            <i class="fa fa-trash" title="Delete Note"></i>
         </div>
+        <h3>{{ note.title }}</h3>
+        <hr>
+            <p>{{ note.date.strftime('%d-%m-%Y') }}</p>
     </div>
     {% endfor %}
-
-    <dialog class="dialogue-window" id="note-add-window">
-        <form action="user/notes/add" method="POST">
-            <h2>Add Note</h2>
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title" required>
-            <label for="content">Content</label>
-            <textarea name="content" id="content" required></textarea>
-            <button type="submit" class="btn">Add</button>
-            <button type="button" class="btn" id="note-add-cancel">Cancel</button>
-        </form>
-    </dialog>
-
-    <dialog class="dialogue-window" id="note-delete-window">
-        <h2>Are you sure you want to delete this note?</h2>
-        <button type="button" class="btn" id="note-delete-confirm">Yes</button>
-        <button type="button" class="btn" id="note-delete-cancel">No</button>
-    </dialog>
-    
 </div>
+
+<dialog id="add-note-modal">
+    <form id="add-note-form" action="{{ url_for('views.add_note') }}" method='POST'>
+        <h2>Add Note</h2>
+        <input type="text" id="note-title" name="title" placeholder="Title">
+        <textarea id="note-content" name="content" placeholder="Content"></textarea>
+        <div class="modal-controls">
+            <input type="submit" value="Add">
+            <button type="button" id="cancel-add-note">Cancel</button>
+        </div>
+    </form>
+</dialog>
 {% endblock %}
 
 {% block scripts %}
-<!-- <script type="module" src="{{ url_for('static', filename='js/notes.js') }}"></script> -->
+<script type="module" src="{{ url_for('static', filename='js/notes.js') }}"></script>
 {% endblock %}

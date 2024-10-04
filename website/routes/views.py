@@ -20,7 +20,7 @@ def notes():
     except:
         notes = []
 
-    return render_template('notes.html', active_page='notes', notes=notes)
+    return render_template('notes.html', active_page='notes', notes=reversed(notes))
 
 @views.route('user/notes/add', methods=['POST'])
 @login_required
