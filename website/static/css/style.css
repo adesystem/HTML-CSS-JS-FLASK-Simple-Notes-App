@@ -135,7 +135,7 @@ main a:hover {
     transform: scale(1.05); 
 }
 
-.auth {
+.auth, .account {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -165,7 +165,7 @@ form input[type=text], form input[type=password] {
     font-size: 1.2em;
 }
 
-form input[type=submit] {
+form input[type=submit], form button {
     padding: 10px 20px;
     width: 100%;
     border: none;
@@ -177,7 +177,7 @@ form input[type=submit] {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-form input[type=submit]:hover {
+form input[type=submit]:hover, form button:hover {
     background-color: var(--hover-color);
     color: var(--primary-color);
     transform: scale(1.05);
@@ -196,6 +196,73 @@ form input[type=submit]:hover {
     width: 50%;
     scale: 0.75;
     margin: 0 auto;
+}
+
+.account p {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 auto;
+}
+.account p i {
+    margin-left: 5px;
+}
+
+.account-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    gap: 15px;
+}
+
+.account-details p {
+    font-size: 1.2em;
+    font-weight: lighter;
+    margin: 0;
+    padding: 0;
+}
+
+.clickable-icon {
+    font-size: 1em;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;}
+
+.clickable-icon:hover {
+    color: var(--hover-color);
+    transform: scale(1.05);
+}
+
+.modal-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+dialog {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--secondary-color);
+    padding: 40px 30px;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 500px;
+    width: 90%;
+    z-index: 1000; 
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 @media(max-width: 1500px) {
@@ -224,5 +291,53 @@ form input[type=submit]:hover {
     nav a span {
         display: none;
     }
+}
+
+/* Alert Styles */
+
+#alert-container {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.alert {
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #333;
+    opacity: 0.9;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #55aa57;
+    color: var(--secondary-color) ;
+}
+
+.alert-error {
+    background-color: #a94442;
+    color: var(--secondary-color);
+}
+
+.alert .close-btn {
+    font-size: 1rem;
+    font-weight: bold;
+    color: inherit;
 }
 

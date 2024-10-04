@@ -7,7 +7,7 @@ from website import db
 
 auth = Blueprint('auth', __name__)
 
-# Login
+
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
 

@@ -34,6 +34,10 @@ def change_username():
     if not password:
         flash('PASSWORD IS REQUIRED', category='error')
         return redirect(url_for('account.user'))
+    
+    if username == current_user.name:
+        flash('USERNAME CANNOT BE THE SAME AS THE CURRENT ONE', category='error')
+        return redirect(url_for('account.user'))
 
     try:
         user = User.query.filter_by(id=current_user.id).first()
