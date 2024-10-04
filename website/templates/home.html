@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Simple Notes</h1>
+        <p>
+            User-friendly application designed to store all kinds of notes.
+        </p>
+        <a href="{% if current_user.is_authenticated %}{{ url_for('views.notes') }}{% else %}{{ url_for('auth.login') }}{% endif %}">Get Started</a>
+{% endblock %}

@@ -3,52 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Notes App</title>
+    <title>{% block title %}Simple Notes{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-    <nav class="navbar">
-        <ul>
-            {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('views.account') }}"><i class="fas fa-user"></i> Account</a></li>
-                <li><a href="{{ url_for('views.notes') }}"><i class="fas fa-sticky-note"></i> Notes</a></li>
-                <li><a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            {% else %}
-                <li><a href="{{ url_for('auth.login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-                <li><a href="{{ url_for('auth.signup') }}"><i class="fas fa-user-plus"></i> Sign Up</a></li>
-            {% endif %}
-            {% if current_user.account_type == 'admin' %}
-                <li><a href="{{ url_for('auth.admin') }}"><i class="fas fa-user-shield"></i> Admin Panel</a></li>
-            {% endif %}
-        </ul>
+    <nav>
+        <a href="{{ url_for('views.home') }}" class="{% if active_page == 'home' %}active{% endif %}" title="Home Page"><i class="fa fa-home"></i><span>Home</span></a>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('account.user') }}" class="{% if active_page == 'user' %}active{% endif %}" title="User"><i class="fa fa-user"> </i><span>User</span></a>
+        <a href="{{ url_for('views.notes') }}" class="{% if active_page == 'notes' %}active{% endif %}" title="Notes"><i class="fa fa-sticky-note"></i><span>Notes</span></a>
+        <a href="{{ url_for('auth.logout') }}" title="Logout"><i class="fa fa-sign-out"></i><span>Logout</span></a>
+        {% else %}
+        <a href="{{ url_for('auth.login') }}" class="{% if active_page == 'login' %}active{% endif %}" title="Login"><i class="fa fa-sign-in"></i><span>Login</span></a>
+        <a href="{{ url_for('auth.signup') }}" class="{% if active_page == 'sign-up' %}active{% endif %}" title="Sign Up"><i class="fa fa-user-plus"></i><span>Sign Up</span></a>
+        {% endif %}
+        {% if current_user.account_type == 'admin' %}
+        <a href="{{ url_for('auth.admin') }}" class="{% if active_page == 'admin_panel' %}active{% endif %}" title="Admin Panel"><i class="fa fa-cog"></i><span>Admin Panel</span></a>
+        {% endif %}
     </nav>
 
-    <div id="alert-container"></div>
-
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 Simple Notes App by Ade</p>
-            <a href="https://github.com/adesystem" target="_blank" class="social-link">
-                <i class="fab fa-github"></i>
-            </a>
-        </div>
-    </footer>
+    <div id="alert"></div>
     
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Ade</p>
+        <a href="https://github.com/adesystem" target="_blank">
+            <i class="fa fa-github"></i>
+        </a>
+    </footer>
+
     <script type="module" src="{{ url_for('static', filename='js/validator.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/alert.js') }}"></script>
-    
+
     {% with messages = get_flashed_messages(with_categories=true) %}
     <script id="flash-messages" type="application/json">{{ messages | tojson }}</script>
     {% endwith %}
 
     {% block scripts %}
     {% endblock %}
-
+    
 </body>
 </html>

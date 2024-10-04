@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 
+{% block title %}Login{% endblock %}
+
 {% block content %}
-<div class="auth-container">
+<div class="auth">
     <h2>Login</h2>
     <form id="login-form" action="/login" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-
-        <button type="submit">Log In</button>
+        <input type="text" id="username" name="username" placeholder="Username">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <input type="submit" value="Login">
     </form>
 
-    <p>Don't have an account? <a href="/sign-up">Sign up</a></p>
+    <p>Don't have an account?</p>
+    <a href="{{ url_for('auth.signup') }}">Sign up</a>
 </div>
 {% endblock %}
 
