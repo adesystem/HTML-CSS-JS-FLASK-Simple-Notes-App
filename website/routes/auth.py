@@ -16,43 +16,44 @@ def login():
         username: str = request.form.get('username')
 
         if not username:
-            flash('Username is required!', category='error')
+            flash('USERNAME IS REQUIRED', category='error')
             return redirect(url_for('auth.login'))
 
         password: str = request.form.get('password')
 
         if not password:
-            flash('Password is required!', category='error')
+            flash('PASSWORD IS REQUIRED', category='error')
             return redirect(url_for('auth.login'))
         
         try:
             user = User.query.filter_by(name=username).first()
             if user:
                 if check_password_hash(user.password, password):
-                    flash('Logged in successfully!', category='success')
+                    flash('LOGGED IN SUCCESFULLY', category='success')
                     login_user(user, remember=True)
-                    return redirect(url_for('views.account'))
+                    return redirect(url_for('account.user'))
                 else:
-                    flash('Username or password is incorrect!', category='error')
+                    flash('USERNAME OR PASSWORD IS INCORRECT', category='error')
             else:
-                flash('Username or password is incorrect!', category='error')
+                flash('USERNAME OR PASSWORD IS INCORRECT', category='error')
 
         except Exception as e:
             db.rollback()
-            flash(str(e), category='error')
+            print(e)
+            flash("INVALID DATA, TRY AGAIN LATER", category='error')
             return redirect(url_for('auth.login'))
     
-    return render_template('login.html')
+    return render_template('login.html', active_page='login')
 
-# Logout
-@auth.route('/logout', methods=['GET'])
+
+@auth.route('/logout')
 @login_required
 def logout():
     logout_user()
-    flash('Logged out successfully!', category='success')
+    flash('LOGGET OUT SUCCESFULLY', category='success')
     return redirect(url_for('auth.login'))
 
-# Sign up
+
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def signup():
 
@@ -60,19 +61,19 @@ def signup():
         username: str = request.form.get('username')
 
         if not username:
-            flash('Username is required!', category='error')
+            flash('USERNAME IS REQUIRED', category='error')
             return redirect(url_for('auth.signup'))
 
         email: str = request.form.get('email')
 
         if not email:
-            flash('Email is required!', category='error')
+            flash('EMAIL IS REQUIRED', category='error')
             return redirect(url_for('auth.signup'))
 
         password: str = request.form.get('password')
 
         if not password:
-            flash('Password is required!', category='error')
+            flash('PASSWORD IS REQUIRED', category='error')
             return redirect(url_for('auth.signup'))
 
         try:
@@ -81,188 +82,28 @@ def signup():
             email_exists: bool = db.session.query(exists().where(User.email == email)).scalar()
 
             if username_exists:
-                raise Exception('Username already exists!')
+                flash("USERNAME ALREADY EXISTS", category='error')
+                return redirect(url_for('auth.signup'))
 
             if email_exists:
-                raise Exception('Email already exists!')
+                flash('EMAIL ALREADY EXISTS', category="error")
+                return redirect(url_for('auth.signup'))
 
             new_user_validator: UserValidator = UserValidator(name=username, email=email, password=generate_password_hash(password, method='pbkdf2:sha256'))
             new_user: User = new_user_validator.to_model()
             db.session.add(new_user)
             db.session.commit()
-            flash('Account created!', category='success')
+            flash('ACCOUNT CREATED SUCCESFULLY', category='success')
             login_user(new_user, remember=True)
             
-            return redirect(url_for('views.account'))
+            return redirect(url_for('account.user'))
         
         except Exception as e:
             db.session.rollback()
             flash(str(e), category='error')
             return redirect(url_for('auth.signup'))
 
-    return render_template('sign-up.html')
-
-# Change username
-@auth.route('/account/username', methods=['POST'])
-@login_required
-def change_username():
-    
-    username: str = request.form.get('username')
-
-    password: str = request.form.get('password')
-
-    if not username:
-        flash('Username is required.', category='error')
-        return redirect(url_for('views.account'))
-    
-    if not password:
-        flash('Password is required.', category='error')
-        return redirect(url_for('views.account'))
-
-    try:
-            user = User.query.filter_by(id=current_user.id).first()
-
-            if (not check_password_hash(user.password, password)):
-                flash('Incorrect password!', category='error')
-                return redirect(url_for('views.account'))
-
-            username_exists: bool = db.session.query(exists().where(User.name == username)).scalar()
-
-            if (username_exists):
-                flash('Username already exists!', category='error')
-                return redirect(url_for('views.account'))
-            
-            user.name = username
-
-            user_validator = user.to_validator()
-    
-            db.session.commit()
-    
-            flash('Username changed!', category='success')
-    
-            return redirect(url_for('views.account'))
-    
-    except Exception as e:
-        db.session.rollback()
-        flash(str(e), category='error')
-        return redirect(url_for('views.account'))
-
-# Change email
-@auth.route('/account/email', methods=['POST'])
-@login_required
-def change_email():
-    
-    email: str = request.form.get('email')
-    password: str = request.form.get('password')
-
-    if not email:
-        flash('Email is required.', category='error')
-        return redirect(url_for('views.account'))
-    
-    if not password:
-        flash('Password is required.', category='error')
-        return redirect(url_for('views.account'))
-    
-    try:
-
-        user = User.query.filter_by(id=current_user.id).first()
-
-        if (not check_password_hash(user.password, password)):
-            flash('Incorrect password!', category='error')
-            return redirect(url_for('views.account'))
-
-        email_exists: bool = db.session.query(exists().where(User.email == email)).scalar()
-
-        if (email_exists):
-            flash('Email already exists!', category='error')
-            return redirect(url_for('views.account'))
-
-        user.email = email
-
-        user_validator = user.to_validator()
-
-        db.session.commit()
-
-        flash('Email changed!', category='success')
-
-        return redirect(url_for('views.account'))
-
-    except Exception as e:
-        db.session.rollback()
-        flash(str(e), category='error')
-        return redirect(url_for('views.account'))
-
-# Change password
-@auth.route('/account/password', methods=['POST'])
-@login_required
-def change_password():
-    
-    current_password: str = request.form.get('current-password')
-
-    if not current_password:
-        flash('Current password is required.', category='error')
-
-    new_password: str = request.form.get('new-password')
-
-    if not new_password:
-        flash('New password is required.', category='error')
-    
-    try:
-
-        user = User.query.filter_by(id=current_user.id).first()
-
-        if (current_password == new_password or check_password_hash(user.password, new_password)):
-            flash('New password cannot be the same as the current password.', category='error')
-            return redirect(url_for('views.account'))
-
-        if not check_password_hash(user.password, current_password):
-            flash('Incorrect password!', category='error')
-            return redirect(url_for('views.account'))
-        
-        user.password = generate_password_hash(new_password, method='pbkdf2:sha256')
-
-        user_validator = user.to_validator()
-
-        db.session.commit()
-
-        flash('Password changed!', category='success')
-
-        return redirect(url_for('views.account'))
-
-    except Exception as e:
-        db.session.rollback()
-        flash(str(e), category='error')
-        return redirect(url_for('views.account'))
-    
-# Delete account
-@auth.route('/account/delete', methods=['POST'])
-@login_required
-def delete_account():
-
-    password: str = request.form.get('password')
-
-    if not password:
-        flash('Password is required.', category='error')
-        return redirect(url_for('views.account'))
-
-    user_to_delete = User.query.filter_by(id=current_user.id).first()
-
-    if not check_password_hash(user_to_delete.password, password):
-        flash('Incorrect password!', category='error')
-        return redirect(url_for('views.account'))
-    
-    try: 
-        Note.query.filter_by(user_id=user_to_delete.id).delete()
-        logout_user()
-        db.session.delete(user_to_delete)
-        db.session.commit()
-        flash('Account deleted!', category='success')
-        return redirect(url_for('auth.login'))
-    
-    except Exception as e:
-        db.session.rollback()
-        flash(str(e), category='error')
-        return redirect(url_for('views.account'))
+    return render_template('sign-up.html', active_page='sign-up')
 
 # Admin Panel
 @auth.route('admin')
